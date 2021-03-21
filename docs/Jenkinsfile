@@ -1,0 +1,32 @@
+pipeline {
+  agent {
+    kubernetes {
+      yaml '''
+kind: Pod
+metadata:
+  name: helm
+spec:
+  serviceAccountName: jenkins
+  containers:
+  - name: helm
+    image: registry.crazyzone.be/helm:latest
+    imagePullPolicy: Always
+    command:
+    - sleep
+    - infinity
+'''
+    }
+
+  }
+  stages {
+    stage('build') {
+      steps {
+        container(name: 'helm') {
+          sh '''#!/bin/sh
+/build.sh release docs home
+          '''
+        }
+      }
+    }
+  }
+}
