@@ -21,13 +21,9 @@ spec:
   stages {
     stage('Checking out helm branch') {
       steps {
-        sh 'mkdir -p helm-docs container-home-docs'
         dir('deps') {
             checkout resolveScm(source: git('https://github.com/nvanlaerebeke/helm-docs.git'), targets: [BRANCH_NAME, 'master'])
-            checkout resolveScm(source: git('https://github.com/nvanlaerebeke/container-home-docs.git'), targets: [BRANCH_NAME, 'master'])
         }
-        sh 'ln -s ./deps/helm-docs ./helm-docs/'
-        sh 'ln -s ./deps/container-home-docs container-home-docs'
       }
     }
     stage('build') {
