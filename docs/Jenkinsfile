@@ -22,7 +22,7 @@ spec:
     stage('Checking out helm branch') {
       steps {
         dir('deps') {
-            checkout resolveScm(source: git('https://github.com/nvanlaerebeke/helm-docs.git'), targets: [BRANCH_NAME, 'master'])
+            checkout([ $class: 'GitSCM', branches: [[name: '*/master']], userRemoteConfigs: [[url: 'https://github.com/nvanlaerebeke/helm-docs.git']]])
         }
       }
     }
