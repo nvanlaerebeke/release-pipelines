@@ -1,0 +1,31 @@
+pipeline {
+  agent {
+    kubernetes {
+      yaml '''
+kind: Pod
+metadata:
+  name: helm
+spec:
+  serviceAccountName: jenkins
+  containers:
+  - name: helm
+    image: registry.crazyzone.be/helm:latest
+    imagePullPolicy: Always
+    command:
+    - sleep
+    - infinity
+'''
+    }
+  }
+  stages {
+    stage('install') {
+      steps {
+        container(name: 'helm', shell: '/bin/bash' ) {
+          sh '''#!/bin/bash 
+/build.sh install helm-nuget operations
+          '''
+        }        
+      }
+    }
+  }
+}
