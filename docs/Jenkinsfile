@@ -20,8 +20,8 @@ spec:
   stages {
     stage('install') {
       steps {
-        container(name: 'helm') {
-          sh '''#!/bin/sh 
+        container(name: 'helm', shell: '/bin/bash' ) {
+          sh '''#!/bin/bash 
 /build.sh install helm-docs home
           '''
         }        
