@@ -16,23 +16,15 @@ spec:
     - infinity
 '''
     }
-
   }
   stages {
-    stage('Checking out helm branch') {
-      steps {
-        dir('deps/helm-docs') {
-            checkout([ $class: 'GitSCM', branches: [[name: '*/master']], userRemoteConfigs: [[url: 'https://github.com/nvanlaerebeke/helm-docs.git']]])
-        }
-      }
-    }
-    stage('build') {
+    stage('install') {
       steps {
         container(name: 'helm') {
-          sh '''#!/bin/sh
-/build.sh release docs home
+          sh '''#!/bin/sh 
+/build.sh install helm-docs home
           '''
-        }
+        }        
       }
     }
   }
